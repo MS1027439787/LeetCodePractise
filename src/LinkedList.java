@@ -14,13 +14,18 @@ public class LinkedList {
             curr = curr.next;
             i--;
         }
-        ListNode tmp = LinkListSolution.reverse(head);
+        //链表翻转
+        //ListNode tmp = LinkListSolution.reverse(head);
+        //删除链表倒数第n个节点
+        //ListNode tmp = LinkListSolution.removeNthFromEnd(head, 1);
+        ListNode tmp = LinkListSolution.removeNthFromEnd_official(head, 1);
+
         while (tmp != null) {
             System.out.println(tmp.val);
             tmp = tmp.next;
         }
-    }
 
+    }
 }
 
 class ListNode {
@@ -29,5 +34,10 @@ class ListNode {
 
     ListNode(int x) {
         val = x;
+    }
+
+    ListNode(int val, ListNode next) {
+        this.val = val;
+        this.next = next;
     }
 }
