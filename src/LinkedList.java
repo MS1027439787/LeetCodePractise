@@ -18,7 +18,9 @@ public class LinkedList {
         //ListNode tmp = LinkListSolution.reverse(head);
         //删除链表倒数第n个节点
         //ListNode tmp = LinkListSolution.removeNthFromEnd(head, 1);
-        ListNode tmp = LinkListSolution.removeNthFromEnd_official(head, 1);
+        //ListNode tmp = LinkListSolution.removeNthFromEnd_official(head, 1);
+        //ListNode tmp = LinkListSolution.removeNthFromEnd_1(head, 2);
+        ListNode tmp = LinkListSolution.removeNthFromEnd_official_2(head, 2);
 
         while (tmp != null) {
             System.out.println(tmp.val);
