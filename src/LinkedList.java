@@ -20,13 +20,19 @@ public class LinkedList {
         //ListNode tmp = LinkListSolution.removeNthFromEnd(head, 1);
         //ListNode tmp = LinkListSolution.removeNthFromEnd_official(head, 1);
         //ListNode tmp = LinkListSolution.removeNthFromEnd_1(head, 2);
-        ListNode tmp = LinkListSolution.removeNthFromEnd_official_2(head, 2);
+        //ListNode tmp = LinkListSolution.removeNthFromEnd_official_2(head, 2);
+        //返回链表倒数第k个节点值
+        //System.out.println(LinkListSolution.kthToLast(head,5));
+        //删除中间节点
+        //LinkListSolution.deleteNode(head);
+        //合并有序链表
+        //ListNode tmp = LinkListSolution.mergeTwoLists(head, head);
+//        while (tmp != null) {
+//            System.out.println(tmp.val);
+//            tmp = tmp.next;
+//        }
 
-        while (tmp != null) {
-            System.out.println(tmp.val);
-            tmp = tmp.next;
-        }
-
+        System.out.println("结束");
     }
 }
 

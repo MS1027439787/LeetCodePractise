@@ -68,29 +68,7 @@ public class LinkListSolution {
     }
 
     /**
-     * 19. 删除链表的倒数第N个节点
-     * 自己实现的先求链表长度，再进行删除
-     */
-
-    public static ListNode removeNthFromEnd_1(ListNode head, int n) {
-        ListNode dummy = new ListNode(0, head);
-        int l = 0, i = 1;
-        ListNode tmp = dummy;
-        while (tmp.next != null) {
-            l++;
-            tmp = tmp.next;
-        }
-        tmp = dummy;
-        while (i < l - n + 1){
-            i++;
-            tmp = tmp.next;
-        }
-        tmp.next = tmp.next.next;
-        return dummy.next;
-    }
-
-    /**
-     * 19. 删除链表的倒数第N个节点
+     * 19. 删除链表的倒数第N个节点(最简单)
      * 官方方法：先求链表长度，再进行删除
      * 大同小异
      */
@@ -115,5 +93,53 @@ public class LinkListSolution {
         return length;
     }
 
+    /**
+     * 面试题 02.02. 返回倒数第 k 个节点
+     * 一遍通过
+     */
+    public static int kthToLast(ListNode head, int k) {
+        ListNode tmp = head;
+        ListNode result = head;
+        int len = 0;
+        while (tmp != null) {
+            len++;
+            tmp = tmp.next;
+        }
+        for (int j = 1; j < len - k + 1; j++) {
+            result = result.next;
+        }
+        return result.val;
+    }
+
+    /**
+     * 面试题 02.03. 删除中间节点
+     * 实现一种算法，删除单向链表中间的某个节点（即不是第一个或最后一个节点），假定你只能访问该节点。
+     * 思路将该节点变为下一个节点，然后将其next指针重新调整
+     */
+    public static void deleteNode(ListNode node) {
+        node.val = node.next.val;
+        node.next = node.next.next;
+    }
+
+    /**
+     * 21. 合并两个有序链表(迭代)
+     */
+    public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode preHead = new ListNode(-1);
+        ListNode pre = preHead;
+        while(l1 != null && l2 != null){
+            if(l1.val <= l2.val){
+                pre.next = l1;
+                l1 = l1.next;
+            }else {
+                pre.next = l2;
+                l2 = l2.next;
+            }
+            pre = pre.next;
+        }
+        // 合并后 l1 和 l2 最多只有一个还未被合并完，我们直接将链表末尾指向未合并完的链表即可
+        pre.next = l1 ==null ? l2 : l1;
+        return preHead.next;
+    }
 }
 
