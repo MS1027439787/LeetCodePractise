@@ -2,8 +2,8 @@
  * @author masai
  * @date 2021/2/1
  */
-public class LinkedList {
-    public static void main(String[] args) {
+public class LinkedListMain {
+    public static void main(StringMain[] args) {
         //链表初始化
         int i = 4;
         ListNode head = new ListNode(5);

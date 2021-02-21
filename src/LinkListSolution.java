@@ -1,10 +1,31 @@
+import java.util.Stack;
+
 /**
  * @author masai
  * @date 2021/2/1
  */
 public class LinkListSolution {
+
     /**
-     * 206.反转链表
+     * 剑指 Offer 06从尾到头打印链表
+     */
+    public int[] reversePrint(ListNode head) {
+        Stack<ListNode> stack = new Stack<>();
+        ListNode temp = head;
+        while(temp != null){
+            stack.push(temp);
+            temp = temp.next;
+        }
+        int size = stack.size();
+        int arr[] =  new int[size];
+        for(int i = 0; i < size; i++){
+            arr[i] = stack.pop().val;
+        }
+        return arr;
+    }
+
+    /**
+     * 206.反转链表(剑指 Offer 24)
      */
     public static ListNode reverse(ListNode head) {
         ListNode pre = null;
@@ -19,9 +40,21 @@ public class LinkListSolution {
     }
 
     /**
+     * 剑指 Offer 35
+     * 复杂链表的复制
+     */
+    /**
+     * 剑指 Offer 18
+     * 删除链表的节点
+     */
+    /**
      * 19. 删除链表的倒数第N个节点
      * 不添加前置节点，自己根据思路实现，第一遍漏掉了删除头结点的情况,后面重新完善了下
      * 思路：快慢指针
+     */
+    /**
+     *剑指 Offer 52
+     *两个链表的第一个公共节点
      */
 
     public static ListNode removeNthFromEnd(ListNode head, int n) {
@@ -94,6 +127,8 @@ public class LinkListSolution {
     }
 
     /**
+     * 剑指 Offer 22
+     * 链表中倒数第k个节点
      * 面试题 02.02. 返回倒数第 k 个节点
      * 一遍通过
      */
@@ -122,6 +157,8 @@ public class LinkListSolution {
     }
 
     /**
+     * 剑指 Offer 25
+     * 合并两个排序的链表
      * 21. 合并两个有序链表(迭代)
      */
     public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
