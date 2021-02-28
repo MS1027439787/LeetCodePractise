@@ -3,7 +3,7 @@
  * @date 2021/2/1
  */
 public class LinkedListMain {
-    public static void main(StringMain[] args) {
+    public static void main(String[] args) {
         //链表初始化
         int i = 4;
         ListNode head = new ListNode(5);
@@ -27,10 +27,12 @@ public class LinkedListMain {
         //LinkListSolution.deleteNode(head);
         //合并有序链表
         //ListNode tmp = LinkListSolution.mergeTwoLists(head, head);
-//        while (tmp != null) {
-//            System.out.println(tmp.val);
-//            tmp = tmp.next;
-//        }
+        //两两交换链表中的节点
+        ListNode tmp = LinkListSolution.swapPairs(head);
+        while (tmp != null) {
+            System.out.println(tmp.val);
+            tmp = tmp.next;
+        }
 
         System.out.println("结束");
     }

@@ -178,5 +178,36 @@ public class LinkListSolution {
         pre.next = l1 ==null ? l2 : l1;
         return preHead.next;
     }
+
+    /**
+     * 24. 两两交换链表中的节点
+     * 递归
+     */
+    public static ListNode swapPairs(ListNode head) {
+        if(head == null || head.next == null)
+            return head;
+        ListNode newHead = head.next;
+        head.next = swapPairs(newHead.next);
+        newHead.next = head;
+        return newHead;
+    }
+    /**
+     * 24. 两两交换链表中的节点
+     * 迭代
+     */
+    public static ListNode swapPairs2(ListNode head) {
+        ListNode tmpHead = new ListNode(0);
+        tmpHead.next = head;
+        ListNode temp = tmpHead;
+        while (temp.next != null && temp.next.next != null) {
+            ListNode node1 = temp.next;
+            ListNode node2 = temp.next.next;
+            temp.next = node2;
+            node1.next = node2.next;
+            node2.next = node1;
+            temp = node1;
+        }
+        return tmpHead.next;
+    }
 }
 

@@ -5,6 +5,10 @@ import java.util.*;
  * @date 2021/2/5
  */
 public class TreeSolution {
+
+    /**
+     * 二叉树前序遍历，迭代法
+     */
     //94、二叉树的中序遍历，递归方法
     public static List<Integer> inorderTraversal(TreeNode root, List result) {
 
@@ -59,7 +63,7 @@ public class TreeSolution {
             return null;
         TreeNode tmp = root.left;
         root.left = mirrorTree(root.right);
-        root.right = mirrorTree(tmp);;
+        root.right = mirrorTree(tmp);
         return root;
     }
     /**
