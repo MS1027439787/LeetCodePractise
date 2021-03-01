@@ -8,18 +8,117 @@ public class TreeSolution {
 
     /**
      * 二叉树前序遍历，迭代法
+     * 前序的规则就是根结点 ---> 左子树 ---> 右子树.（一定要记清楚定义）
      */
-    //94、二叉树的中序遍历，递归方法
-    public static List<Integer> inorderTraversal(TreeNode root, List result) {
-
-        if (root != null) {
-            if (root.left != null)
-                inorderTraversal(root.left, result);
-            result.add(root.val);
-            if (root.right != null)
-                inorderTraversal(root.right, result);
+    //用栈来模拟整个递归算法的过程
+    public static List<Integer> preorderTraversal2(TreeNode root) {
+        List<Integer> res = new ArrayList<Integer>();
+        if (root == null) {
+            return res;
+        }
+        Deque<TreeNode> stack = new LinkedList<TreeNode>();
+        TreeNode node = root;
+        //node != null该条件非常关键，切记，切记
+        while (!stack.isEmpty() || node != null) {
+            while (node != null) {
+                res.add(node.val);
+                stack.push(node);
+                //遍历到左边最后一个空节点（深度优先）
+                node = node.left;
+            }
+            node = stack.pop();
+            node = node.right;
+        }
+        return res;
+    }
+    //该写法好理解，但是本质上没有利用栈来模拟递归过程
+    public static List<Integer> preorderTraversal(TreeNode root) {
+        List result = new ArrayList<>();
+        if(root == null)
+            return result;
+        Stack stack = new Stack();
+        stack.push(root);
+        while(!stack.isEmpty()){
+            TreeNode tmp = (TreeNode) stack.pop();
+            result.add(tmp.val);
+            if(tmp.right != null)
+                stack.push(tmp.right);
+            if(tmp.left != null)
+                stack.push(tmp.left);
         }
         return result;
+    }
+
+    /**
+     * 145. 二叉树的后序遍历
+     */
+    //递归方法
+    public static List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> res = new ArrayList<Integer>();
+        postorder(root, res);
+        return res;
+    }
+
+    public static void postorder(TreeNode root, List<Integer> res) {
+        if (root == null) {
+            return;
+        }
+        postorder(root.left, res);
+        postorder(root.right, res);
+        res.add(root.val);
+    }
+    //迭代方法
+    public static List<Integer> postorderTraversal2(TreeNode root) {
+        List<Integer> res = new ArrayList<Integer>();
+        if (root == null) {
+            return res;
+        }
+        Deque<TreeNode> stack = new LinkedList<TreeNode>();
+        TreeNode prev = null;
+        while (root != null || !stack.isEmpty()) {
+            while (root != null) {
+                stack.push(root);
+                root = root.left;
+            }
+            root = stack.pop();
+            //prev保存上一个加入结果集的节点，判断一个节点能否假结果集的条件有两个：
+            // 1、左右子树都为空，
+            // 2、右子树不空，但是右子树已经被访问
+            if (root.right == null || root.right == prev) {
+                res.add(root.val);
+                prev = root;
+                root = null;
+            } else {
+                stack.push(root);
+                root = root.right;
+            }
+        }
+        return res;
+    }
+    //94、二叉树的中序遍历，递归方法
+    public static void inorderTraversal(TreeNode root, List res) {
+        if (root == null) {
+            return;
+        }
+        inorder(root.left, res);
+        res.add(root.val);
+        inorder(root.right, res);
+    }
+
+    //迭代方法
+    public static List<Integer> inorderTraversal2(TreeNode root) {
+        List<Integer> res = new ArrayList<Integer>();
+        Deque<TreeNode> stack = new LinkedList<TreeNode>();
+        while (root != null || !stack.isEmpty()) {
+            while (root != null) {
+                stack.push(root);
+                root = root.left;
+            }
+            root = stack.pop();
+            res.add(root.val);
+            root = root.right;
+        }
+        return res;
     }
 
     //面试题：求二叉树每一条路径上值的和并输出

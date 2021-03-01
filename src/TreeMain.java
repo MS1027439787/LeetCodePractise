@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class TreeMain {
     public static void main(String[] args) {
         TreeNode root = new TreeNode(1);
@@ -9,7 +11,7 @@ public class TreeMain {
         a.right = d;
         root.left = a;
         root.right = b;
-        TreeSolution.maxDepth(root);
+        List list = TreeSolution.postorderTraversal2(root);
         System.out.println("结束");
     }
 }
