@@ -42,20 +42,95 @@ public class LinkListSolution {
     /**
      * 剑指 Offer 35
      * 复杂链表的复制
+     * 在 原链表每一个节点后，续接 一个新节点
+     * 为 当前链表 的 每一个新new节点的random属性 赋值
+     * 将 当前链表，按照一个间隔一个的顺序 拆分开
+     * 将新new节点，串成一个 新链表
+     * 将原链表的节点，拆出来并组合成 原链表
+     * 将 原链表的最后一个节点 的 next指针，重新指向null
      */
+    public ListNode copyRandomList(ListNode head) {
+        if (head == null) {
+            return null;
+        }
+
+        ListNode curNode = head;
+
+        /*
+            在 原链表每一个节点后，续接 一个新节点
+        */
+        while (curNode != null) {
+            ListNode tempNode = new ListNode(curNode.val);
+            tempNode.next = curNode.next;
+            curNode.next = tempNode;    // 将 当前节点的next 指向 新new节点
+            curNode = tempNode.next;    // 将 当前节点 指向 原链表的下一个节点
+        }
+
+        /*
+            为 当前链表 的 每一个新new节点的random属性 赋值
+        */
+        curNode = head;
+        while (curNode != null) {
+            /*
+                由于我们让curNode首先指向的是head节点，
+                因此，我们让curNode一直指向 原链表的节点 即可！
+            */
+            if (curNode.random != null) {
+                curNode.next.random = curNode.random.next;  // 为 新new节点的random 赋值为 原链表中应该的random指向的节点的相应的新new节点
+            }
+            curNode = curNode.next.next;
+        }
+
+        /*
+            将 当前链表，按照一个间隔一个的顺序 拆分开
+                1、将新new节点，串成一个 新链表
+                2、将原链表的节点，拆出来并组合成 原链表
+        */
+        curNode = head.next;
+        ListNode preNode = head;
+        ListNode result = head.next;
+        while (curNode.next != null) {
+            preNode.next = preNode.next.next;
+            curNode.next = curNode.next.next;
+            preNode = preNode.next;
+            curNode = curNode.next;
+        }
+        preNode.next = null;    // 将 原链表的最后一个节点 的 next指针，重新指向null
+        return result;
+    }
     /**
      * 剑指 Offer 18
      * 删除链表的节点
      */
-    /**
-     * 19. 删除链表的倒数第N个节点
-     * 不添加前置节点，自己根据思路实现，第一遍漏掉了删除头结点的情况,后面重新完善了下
-     * 思路：快慢指针
-     */
+    public static ListNode deleteNode(ListNode head, int val) {
+        if(head.val == val) return head.next;
+        ListNode pre = head, cur = head.next;
+        while(cur != null && cur.val != val) {
+            pre = cur;
+            cur = cur.next;
+        }
+        if(cur != null) pre.next = cur.next;
+        return head;
+    }
+
     /**
      *剑指 Offer 52
      *两个链表的第一个公共节点
+     *浪漫相遇
+     * 两个链表长度分别为L1+C、L2+C， C为公共部分的长度，按照楼主的做法：
+     * 第一个人走了L1+C步后，回到第二个人起点走L2步；第2个人走了L2+C步后，
+     * 回到第一个人起点走L1步。 当两个人走的步数都为L1+L2+C时就两个家伙就相爱了
      */
+    public static ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+        //极致简洁的代码
+        ListNode A = headA, B = headB;
+        while (A != B) {
+            A = A != null ? A.next : headB;
+            B = B != null ? B.next : headA;
+        }
+        return A;
+    }
+
 
     public static ListNode removeNthFromEnd(ListNode head, int n) {
         //快慢指针
