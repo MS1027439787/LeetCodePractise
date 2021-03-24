@@ -1,9 +1,21 @@
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class ArraySolution {
+
+    /**
+     * 面试题：删除arraylist中小于0的元素
+     */
+    public static List removeElement(List<Integer> list){
+       if(list.size() == 0 || list == null){
+           return list;
+       }
+       for(int i = list.size() - 1; i >= 0; i--){
+           if(list.get(i) < 0){
+               list.remove(i);
+           }
+       }
+       return list;
+    }
     /**
      * 1、两数之和
      */
