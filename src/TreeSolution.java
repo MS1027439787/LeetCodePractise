@@ -16,6 +16,7 @@ public class TreeSolution {
         if (root == null) {
             return res;
         }
+        Stack stac = new Stack();
         Deque<TreeNode> stack = new LinkedList<TreeNode>();
         TreeNode node = root;
         //node != null该条件非常关键，切记，切记
@@ -81,7 +82,7 @@ public class TreeSolution {
                 root = root.left;
             }
             root = stack.pop();
-            //prev保存上一个加入结果集的节点，判断一个节点能否假结果集的条件有两个：
+            //prev保存上一个加入结果集的节点，判断一个节点能否加入结果集的条件有两个：
             // 1、左右子树都为空，
             // 2、右子树不空，但是右子树已经被访问
             if (root.right == null || root.right == prev) {
