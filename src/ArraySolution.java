@@ -61,7 +61,7 @@ public class ArraySolution {
     }
 
     /**
-     * 面试题：二维数组查找，每一行按照从左到右顺序递增，每一列按照从下到上顺序递增
+     * 面试题：二维数组查找，每一行按照从左到右顺序递增，每一列按照从上到下顺序递增
      */
     public static boolean findNumberIn2DArray(int[][] matrix, int target) {
         if(matrix == null || matrix.length == 0 || matrix[0].length == 0)
