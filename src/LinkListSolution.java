@@ -132,31 +132,9 @@ public class LinkListSolution {
     }
 
 
-    public static ListNode removeNthFromEnd(ListNode head, int n) {
-        //快慢指针
-        ListNode fast = head;
-        ListNode slow = head;
-        ListNode tmp = null;
-        int i = 0;
-        while (i < n) {
-            fast = fast.next;
-            i++;
-        }
-        while (fast != null) {
-            fast = fast.next;
-            tmp = slow;
-            slow = slow.next;
-        }
-        if (tmp == null)
-            //需要将原head节点的next指针置空吗？如果不置空，jvm会回收吗？
-            head = head.next;
-        if (tmp != null)
-            tmp.next = slow.next;
-        return head;
-    }
-
     /**
      * 19. 删除链表的倒数第N个节点
+     * 核心就是找到倒数第n个是正数第几个
      */
 
     public static ListNode removeNthFromEnd_official(ListNode head, int n) {

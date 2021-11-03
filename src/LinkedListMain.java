@@ -14,6 +14,7 @@ public class LinkedListMain {
             curr = curr.next;
             i--;
         }
+
         //链表翻转
         //ListNode tmp = LinkListSolution.reverse(head);
         //删除链表倒数第n个节点
