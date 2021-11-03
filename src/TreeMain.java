@@ -11,8 +11,15 @@ public class TreeMain {
         a.right = d;
         root.left = a;
         root.right = b;
-        List list = TreeSolution.postorderTraversal2(root);
-        System.out.println("结束");
+        List list = TreeSolution.preorderTraversal2(root);
+        for(int i = 0; i < list.size(); i++){
+            System.out.println(list.get(i));
+        }
+        TreeSolution.mirrorTree(root);
+        List list2 = TreeSolution.preorderTraversal2(root);
+        for(int i = 0; i < list2.size(); i++){
+            System.out.println(list2.get(i));
+        }
     }
 }
 class TreeNode {

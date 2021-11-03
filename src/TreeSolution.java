@@ -9,26 +9,36 @@ public class TreeSolution {
     /**
      * 二叉树前序遍历，迭代法
      * 前序的规则就是根结点 ---> 左子树 ---> 右子树.（一定要记清楚定义）
+     *
      */
+    //递归方法
+    public static void preorderTraversal(TreeNode root, List<Integer> res) {
+        if (root == null) {
+            return;
+        }
+        res.add(root.val);
+        postorder(root.left, res);
+        postorder(root.right, res);
+
+    }
+
     //用栈来模拟整个递归算法的过程
     public static List<Integer> preorderTraversal2(TreeNode root) {
         List<Integer> res = new ArrayList<Integer>();
         if (root == null) {
             return res;
         }
-        Stack stac = new Stack();
         Deque<TreeNode> stack = new LinkedList<TreeNode>();
-        TreeNode node = root;
-        //node != null该条件非常关键，切记，切记
-        while (!stack.isEmpty() || node != null) {
-            while (node != null) {
-                res.add(node.val);
-                stack.push(node);
+        //root != null该条件非常关键，切记，切记
+        while (!stack.isEmpty() || root != null) {
+            while (root != null) {
+                res.add(root.val);
+                stack.push(root);
                 //遍历到左边最后一个空节点（深度优先）
-                node = node.left;
+                root = root.left;
             }
-            node = stack.pop();
-            node = node.right;
+            root = stack.pop();
+            root = root.right;
         }
         return res;
     }
@@ -54,12 +64,6 @@ public class TreeSolution {
      * 145. 二叉树的后序遍历
      */
     //递归方法
-    public static List<Integer> postorderTraversal(TreeNode root) {
-        List<Integer> res = new ArrayList<Integer>();
-        postorder(root, res);
-        return res;
-    }
-
     public static void postorder(TreeNode root, List<Integer> res) {
         if (root == null) {
             return;
@@ -110,7 +114,7 @@ public class TreeSolution {
     public static List<Integer> inorderTraversal2(TreeNode root) {
         List<Integer> res = new ArrayList<Integer>();
         Deque<TreeNode> stack = new LinkedList<TreeNode>();
-        while (root != null || !stack.isEmpty()) {
+        while (!stack.isEmpty() || root != null) {
             while (root != null) {
                 stack.push(root);
                 root = root.left;
@@ -289,11 +293,6 @@ public class TreeSolution {
         return myBuildTree(preorder, inorder, 0, n - 1, 0, n - 1);
     }
 
-
-    /**
-     * 剑指 Offer 33
-     * 二叉搜索树的后序遍历序列
-     */
 
     /**
      * 剑指 Offer 36
