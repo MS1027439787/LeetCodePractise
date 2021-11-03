@@ -202,7 +202,7 @@ public class LinkListSolution {
     /**
      * 面试题 02.03. 删除中间节点
      * 实现一种算法，删除单向链表中间的某个节点（即不是第一个或最后一个节点），假定你只能访问该节点。
-     * 思路将该节点变为下一个节点，然后将其next指针重新调整
+     * 思路将该节点变为下一个节点，然后将其next指针重新调整（严格意义上讲，这算删除吗？中间节点还在只是变了值而已）
      */
     public static void deleteNode(ListNode node) {
         node.val = node.next.val;
