@@ -29,7 +29,7 @@ public class LinkedListMain {
         //合并有序链表
         //ListNode tmp = LinkListSolution.mergeTwoLists(head, head);
         //两两交换链表中的节点
-        ListNode tmp = LinkListSolution.swapPairs(head);
+        ListNode tmp = LinkListSolution.swapPairs2(head);
         while (tmp != null) {
             System.out.println(tmp.val);
             tmp = tmp.next;

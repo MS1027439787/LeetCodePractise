@@ -249,9 +249,9 @@ public class LinkListSolution {
      * 迭代
      */
     public static ListNode swapPairs2(ListNode head) {
-        ListNode tmpHead = new ListNode(0);
-        tmpHead.next = head;
-        ListNode temp = tmpHead;
+        ListNode dummyHead  = new ListNode(0);
+        dummyHead .next = head;
+        ListNode temp = dummyHead ;
         while (temp.next != null && temp.next.next != null) {
             ListNode node1 = temp.next;
             ListNode node2 = temp.next.next;
@@ -260,7 +260,7 @@ public class LinkListSolution {
             node2.next = node1;
             temp = node1;
         }
-        return tmpHead.next;
+        return dummyHead.next;
     }
 }
 

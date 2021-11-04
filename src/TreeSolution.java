@@ -293,9 +293,4 @@ public class TreeSolution {
         return myBuildTree(preorder, inorder, 0, n - 1, 0, n - 1);
     }
 
-
-    /**
-     * 剑指 Offer 36
-     * 二叉搜索树与双向链表
-     */
 }
