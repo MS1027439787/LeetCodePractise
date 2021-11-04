@@ -7,19 +7,35 @@ public class SortSolution {
     static int len1;
 
     public static void main(String[] args) {
-        int[] arr = {10,100,20,70,80,1};
+        int[] arr = {10,2,3,4,5,6,7,10,5,4};
         //bubbleSort(arr);
         //QuickSort(arr, 0, arr.length - 1);
         //归并排序，测试时发现直接调用之后，原数组根本不变，看代码之后发现返回结果是一个新数组
         //arr = MergeSort(arr);
         //CountingSort(arr);
         //RadixSort(arr);
-        for(int i = 0; i <=arr.length - 1; i++){
+        quickSort(arr, 0, arr.length - 1);
+        for (int i = 0; i <= arr.length - 1; i++) {
             System.out.println(arr[i]);
         }
     }
+
+
+    /**
+     * 字节面试题
+     * 给定一个长度为 n 的数组，请你编写一个函数，返回该数组排序后的结果。
+     * 数据范围： 10000000≤n≤1000000，数组中每个元素都满足 10000000000≤val≤1000000000
+     * 要求：空间复杂度 O(n)O(n)，时间复杂度 O(nlogn)O(nlogn)
+     */
+    public int[] MySort(int[] arr) {
+        // write code here
+        Arrays.sort(arr);
+        return arr;
+    }
+
     /**
      * 冒泡排序
+     *
      * @param arr
      */
     public static void bubbleSort(int[] arr) {
@@ -37,18 +53,17 @@ public class SortSolution {
     }
 
     /**
-     *插入排序
+     * 插入排序
      */
-    public static int[] insertionSort(int[] a)
-    {
-        for( int i = 1; i < a.length; i++ ){
+    public static int[] insertionSort(int[] a) {
+        for (int i = 1; i < a.length; i++) {
             int j;
-            int tmp = a[ i ];
+            int tmp = a[i];
             //从后往前查找tmp位置
-            for( j = i; j > 0 && tmp < a[j-1] ; j-- ){
-                a[ j ] = a[ j - 1 ];
+            for (j = i; j > 0 && tmp < a[j - 1]; j--) {
+                a[j] = a[j - 1];
             }
-            a[ j ] = tmp;
+            a[j] = tmp;
         }
         return a;
     }
@@ -117,97 +132,71 @@ public class SortSolution {
         return array;
     }
 
+
     /**
-     * 快速排序方法
+     * 快速排序
      */
-    public static int[] QuickSort(int[] array, int start, int end) {
-        if (array.length < 1 || start < 0 || end >= array.length || start > end) return null;
-        int smallIndex = partition(array, start, end);
-        if (smallIndex > start)
-            QuickSort(array, start, smallIndex - 1);
-        if (smallIndex < end)
-            QuickSort(array, smallIndex + 1, end);
-        return array;
-    }
-    /**
-     * 快速排序辅助算法——partition
-     */
-    public static int partition(int[] array, int start, int end) {
-        //随机选取值作为枢轴，移动的核心是双指针，将小于枢轴的值不断左移，等遍历到最后一位时，小于等于枢轴的值都已经被移到了左方，而枢轴值是最后一位，枢轴值同理移动，最后smallIndex保存枢轴位置。
-        int pivot = (int) (start + Math.random() * (end - start + 1));
-        int smallIndex = start - 1;
-        swap(array, pivot, end);
-        for (int i = start; i <= end; i++){
-            if (array[i] <= array[end]) {
-                //遍历比较，每有一个小于等于枢轴值的smallIndex值加1，由于是小于等于，所以等于枢轴的值会在枢轴左边
-                smallIndex++;
-                //开始交换数据，将小于枢轴值的值从start位置依次往后存放，结束时，
-                // 小于枢轴的值都被移到了左方，右方自然就是大于枢轴的值，枢轴值作为数组最后一位同样参与遍历
-                //理论上来说i是一定大于smallIndex的，因为i从start开始递增，无条件限制，而smallindex从start-1开始递增，而且递增有条件限制
-                if (i > smallIndex)
-                    swap(array, i, smallIndex);
+    public static int[] quickSort(int arr[], int start, int end) {
+        int i = start, j = end;
+        int temp;
+        if (i < j) {
+            //以数组第一个值为枢轴,将数组第一个值作为临时节点，进行数据的整体左移和右移
+            temp = arr[i];
+            while (i != j) {
+                while (j > i && arr[j] >= temp) j--;
+                arr[i] = arr[j];
+                while (i < j && arr[i] < temp) i++;
+                arr[j] = arr[i];
             }
+            arr[i] = temp;
+            quickSort(arr, start, i - 1);
+            quickSort(arr, i + 1, end);
         }
-        //返回当前枢轴位置
-        return smallIndex;
-    }
-    /**
-     * 交换数组内两个元素
-     */
-    public static void swap(int[] array, int i, int j) {
-        int temp = array[i];
-        array[i] = array[j];
-        array[j] = temp;
+        return arr;
     }
 
-    /**
-     * 堆排序算法
-     *
-     * @param array
-     * @return
-     */
-    public static int[] HeapSort(int[] array) {
-        len1 = array.length;
-        if (len1 < 1) return array;
-        //1.构建一个最大堆
-        for (int i = (len1/2 - 1); i >= 0; i--) {
-            adjustHeap(array, i);
-        }
-        //2.循环将堆首位（最大值）与末位交换，然后再重新调整最大堆
-        while (len1 > 0) {
-            int tmp = array[0];
-            array[0] = array[len1 - 1];
-            array[len1 - 1] = tmp;
-            len1--;
-            adjustHeap(array, 0);
-        }
-        return array;
-    }
-    /**
-     * 自上而下调整使之成为最大堆
-     *
-     * @param array
-     * @param i
-     */
-    public static void adjustHeap(int[] array, int i) {
-        int maxIndex = i;
-        //如果有左子树，且左子树大于父节点，则将最大指针指向左子树
-        if (i * 2 < len1 && array[i * 2] > array[maxIndex])
-            maxIndex = i * 2;
-        //如果有右子树，且右子树大于父节点和左子树中的最大者，则将最大指针指向右子树
-        // ，此时maxIndex中存储的是左子树和父节点中的较大者的下标。
-        if (i * 2 + 1 < len1 && array[i * 2 + 1] > array[maxIndex])
-            maxIndex = i * 2 + 1;
-        //如果父节点不是最大值，也就是上面对maxindex值有调整，则将父节点与最大值交换，并且递归调整与父节点交换的位置。
-        if (maxIndex != i) {
-            int tmp = array[maxIndex];
-            array[maxIndex] = array[i];
-            array[i] = tmp;
-            //此时maxIndex指向的是交换位置后的子节点，由于交换了位置，子节点的子树必须递归进行调整。
-            adjustHeap(array, maxIndex);
-        }
-    }
-
+//    /**
+//     * 快速排序
+//     */
+//    public static int[] quickSort2(int[] array, int start, int end) {
+//        if (array.length < 1 || start < 0 || end >= array.length || start > end) return null;
+//        int smallIndex = partition(array, start, end);
+//        if (smallIndex > start)
+//            quickSort2(array, start, smallIndex - 1);
+//        if (smallIndex < end)
+//            quickSort2(array, smallIndex + 1, end);
+//        return array;
+//    }
+//    /**
+//     * 快速排序辅助算法——partition
+//     */
+//    public static int partition(int[] array, int start, int end) {
+//        //随机选取值作为枢轴，移动的核心是双指针，将小于枢轴的值不断左移，等遍历到最后一位时，小于等于枢轴的值都已经被移到了左方，而枢轴值是最后一位，枢轴值同理移动，最后smallIndex保存枢轴位置。
+//        int pivot = (int) (start + Math.random() * (end - start + 1));
+//        int smallIndex = start - 1;
+//        swap(array, pivot, end);
+//        for (int i = start; i <= end; i++){
+//            if (array[i] <= array[end]) {
+//                //遍历比较，每有一个小于等于枢轴值的smallIndex值加1，由于是小于等于，所以等于枢轴的值会在枢轴左边
+//                smallIndex++;
+//                //开始交换数据，将小于枢轴值的值从start位置依次往后存放，结束时，
+//                // 小于枢轴的值都被移到了左方，右方自然就是大于枢轴的值，枢轴值作为数组最后一位同样参与遍历
+//                //理论上来说i是一定大于smallIndex的，因为i从start开始递增，无条件限制，而smallindex从start-1开始递增，而且递增有条件限制
+//                if (i > smallIndex)
+//                    swap(array, i, smallIndex);
+//            }
+//        }
+//        //返回当前枢轴位置
+//        return smallIndex;
+//    }
+//    /**
+//     * 交换数组内两个元素
+//     */
+//    public static void swap(int[] array, int i, int j) {
+//        int temp = array[i];
+//        array[i] = array[j];
+//        array[j] = temp;
+//    }
 
     /**
      * 归并排序
@@ -215,7 +204,7 @@ public class SortSolution {
      * @param array
      * @return
      */
-    public static int[] MergeSort ( int[] array){
+    public static int[] MergeSort(int[] array) {
         if (array.length < 2) return array;
         int mid = array.length / 2;
         //copyOfRange方法，包括from，不包括to，对下面来说就是left包括0不包括mid，right包括mid不包括array.length
@@ -231,7 +220,7 @@ public class SortSolution {
      * @param right
      * @return
      */
-    public static int[] merge( int[] left, int[] right){
+    public static int[] merge(int[] left, int[] right) {
         int[] result = new int[left.length + right.length];
         for (int index = 0, i = 0, j = 0; index < result.length; index++) {
             //合并过程i代表left数组下标，j指示right数组下标，index指示result数组下标，left，right都已经有序
@@ -262,6 +251,56 @@ public class SortSolution {
         }
         return result;
     }
+
+    /**
+     * 堆排序算法
+     *
+     * @param array
+     * @return
+     */
+    public static int[] HeapSort(int[] array) {
+        len1 = array.length;
+        if (len1 < 1) return array;
+        //1.构建一个最大堆
+        for (int i = (len1 / 2 - 1); i >= 0; i--) {
+            adjustHeap(array, i);
+        }
+        //2.循环将堆首位（最大值）与末位交换，然后再重新调整最大堆
+        while (len1 > 0) {
+            int tmp = array[0];
+            array[0] = array[len1 - 1];
+            array[len1 - 1] = tmp;
+            len1--;
+            adjustHeap(array, 0);
+        }
+        return array;
+    }
+
+    /**
+     * 自上而下调整使之成为最大堆
+     *
+     * @param array
+     * @param i
+     */
+    public static void adjustHeap(int[] array, int i) {
+        int maxIndex = i;
+        //如果有左子树，且左子树大于父节点，则将最大指针指向左子树
+        if (i * 2 < len1 && array[i * 2] > array[maxIndex])
+            maxIndex = i * 2;
+        //如果有右子树，且右子树大于父节点和左子树中的最大者，则将最大指针指向右子树
+        // ，此时maxIndex中存储的是左子树和父节点中的较大者的下标。
+        if (i * 2 + 1 < len1 && array[i * 2 + 1] > array[maxIndex])
+            maxIndex = i * 2 + 1;
+        //如果父节点不是最大值，也就是上面对maxindex值有调整，则将父节点与最大值交换，并且递归调整与父节点交换的位置。
+        if (maxIndex != i) {
+            int tmp = array[maxIndex];
+            array[maxIndex] = array[i];
+            array[i] = tmp;
+            //此时maxIndex指向的是交换位置后的子节点，由于交换了位置，子节点的子树必须递归进行调整。
+            adjustHeap(array, maxIndex);
+        }
+    }
+
 
     /**
      * 计数排序
@@ -333,8 +372,10 @@ public class SortSolution {
         }
         return resultArr;
     }
+
     /**
      * 基数排序
+     *
      * @param array
      * @return
      */
@@ -367,6 +408,7 @@ public class SortSolution {
                 bucketList.get(j).clear();
             }
         }
-        return array;    }
+        return array;
+    }
 
 }
