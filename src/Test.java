@@ -6,7 +6,8 @@ import java.util.Arrays;
  */
 public class Test {
     public static void main(String[] args) {
-
+        String a = "abc";
+        a.equals("abc");
     }
 
     public static ListNode reverseabc(ListNode list) {
