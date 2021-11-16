@@ -1,4 +1,6 @@
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author masai
@@ -7,8 +9,10 @@ import java.util.Arrays;
 public class Test {
     public static void main(String[] args) {
         String a = "abc";
-        a.equals("abc");
-    }
+        System.out.println(a.equals(a));
+        Map map = new HashMap();
+        map.put("abc","abc");
+     }
 
     public static ListNode reverseabc(ListNode list) {
         if (list == null) {

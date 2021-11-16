@@ -4,7 +4,8 @@ import java.util.List;
 
 public class ArrayMain {
     public static void main(String[] args) {
-        int[] a = {-1,-2,-3,4,5,6};
+        int[] a = {-3,-2,-1,4,5,100,90,5,4,3};
+        System.out.println(ArraySolution.repeat_num(a));
         int[] [] array = {{1,   4,  7, 11, 15},{2,   5,  8, 12, 19},{3,   6,  9, 16, 22},{10, 13, 14, 17, 24}};
         List<Integer> list = new ArrayList<Integer>(10);
 
