@@ -1,3 +1,6 @@
+import java.util.Deque;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Stack;
 
 /**
@@ -6,19 +9,77 @@ import java.util.Stack;
  */
 public class LinkListSolution {
 
+
+    /**
+     * 用两个栈实现队列
+     */
+    public class Solution {
+        Deque<Integer> stack1 = new LinkedList<>();
+        Deque<Integer> stack2 = new LinkedList<>();
+
+        public void push(int node) {
+            stack1.push(node);
+        }
+
+        public int pop() {
+            if (stack2.size() <= 0) {
+                while (stack1.size() != 0) {
+                    stack2.push(stack1.pop());
+                }
+            }
+            return stack2.pop();
+        }
+    }
+
+    /**
+     * 判断链表中是否有环：hash法
+     */
+    public static boolean hasCycle(ListNode head) {
+        // 使用set来记录出现的结点
+        HashSet<ListNode> set = new HashSet<>();
+        while (head != null) {
+            // 当set中包含结点，说明第一次出现重复的结点，即环的入口结点
+            if (set.contains(head)) {
+                return true;
+            }
+            // set中加入未重复的结点
+            set.add(head);
+            head = head.next;
+        }
+        return false;
+    }
+
+    /**
+     * 判断链表中是否有环：快慢指针法
+     */
+    public boolean hasCycle2(ListNode head) {
+        if (head == null) return false;
+        // 定义快慢指针
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast != null && fast.next != null) {
+            // 快指针是满指针的两倍速度
+            fast = fast.next.next;
+            slow = slow.next;
+            // 记录快慢指针第一次相遇的结点
+            if (slow == fast) return true;
+        }
+        return false;
+    }
+
     /**
      * 剑指 Offer 06从尾到头打印链表
      */
     public int[] reversePrint(ListNode head) {
         Stack<ListNode> stack = new Stack<>();
         ListNode temp = head;
-        while(temp != null){
+        while (temp != null) {
             stack.push(temp);
             temp = temp.next;
         }
         int size = stack.size();
-        int arr[] =  new int[size];
-        for(int i = 0; i < size; i++){
+        int arr[] = new int[size];
+        for (int i = 0; i < size; i++) {
             arr[i] = stack.pop().val;
         }
         return arr;
@@ -98,25 +159,26 @@ public class LinkListSolution {
         preNode.next = null;    // 将 原链表的最后一个节点 的 next指针，重新指向null
         return result;
     }
+
     /**
      * 剑指 Offer 18
      * 删除链表的节点
      */
     public static ListNode deleteNode(ListNode head, int val) {
-        if(head.val == val) return head.next;
+        if (head.val == val) return head.next;
         ListNode pre = head, cur = head.next;
-        while(cur != null && cur.val != val) {
+        while (cur != null && cur.val != val) {
             pre = cur;
             cur = cur.next;
         }
-        if(cur != null) pre.next = cur.next;
+        if (cur != null) pre.next = cur.next;
         return head;
     }
 
     /**
-     *剑指 Offer 52
-     *两个链表的第一个公共节点
-     *浪漫相遇
+     * 剑指 Offer 52
+     * 两个链表的第一个公共节点
+     * 浪漫相遇
      * 两个链表长度分别为L1+C、L2+C， C为公共部分的长度，按照楼主的做法：
      * 第一个人走了L1+C步后，回到第二个人起点走L2步；第2个人走了L2+C步后，
      * 回到第一个人起点走L1步。 当两个人走的步数都为L1+L2+C时就两个家伙就相爱了
@@ -217,18 +279,18 @@ public class LinkListSolution {
     public static ListNode mergeTwoLists(ListNode l1, ListNode l2) {
         ListNode preHead = new ListNode(-1);
         ListNode pre = preHead;
-        while(l1 != null && l2 != null){
-            if(l1.val <= l2.val){
+        while (l1 != null && l2 != null) {
+            if (l1.val <= l2.val) {
                 pre.next = l1;
                 l1 = l1.next;
-            }else {
+            } else {
                 pre.next = l2;
                 l2 = l2.next;
             }
             pre = pre.next;
         }
         // 合并后 l1 和 l2 最多只有一个还未被合并完，我们直接将链表末尾指向未合并完的链表即可
-        pre.next = l1 ==null ? l2 : l1;
+        pre.next = l1 == null ? l2 : l1;
         return preHead.next;
     }
 
@@ -237,21 +299,22 @@ public class LinkListSolution {
      * 递归
      */
     public static ListNode swapPairs(ListNode head) {
-        if(head == null || head.next == null)
+        if (head == null || head.next == null)
             return head;
         ListNode newHead = head.next;
         head.next = swapPairs(newHead.next);
         newHead.next = head;
         return newHead;
     }
+
     /**
      * 24. 两两交换链表中的节点
      * 迭代
      */
     public static ListNode swapPairs2(ListNode head) {
-        ListNode dummyHead  = new ListNode(0);
-        dummyHead .next = head;
-        ListNode temp = dummyHead ;
+        ListNode dummyHead = new ListNode(0);
+        dummyHead.next = head;
+        ListNode temp = dummyHead;
         while (temp.next != null && temp.next.next != null) {
             ListNode node1 = temp.next;
             ListNode node2 = temp.next.next;

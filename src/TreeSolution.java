@@ -7,9 +7,28 @@ import java.util.*;
 public class TreeSolution {
 
     /**
+     * 二叉树最近公共祖先
+     */
+    public static TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+        //这里是思考难点。定义规则：比如在某一棵子树上先找到了p，则无需继续遍历这棵子树，因为即使这棵子树有q，p也一定是q的祖先，也就是它们两个的最近公共祖先。
+        if (null == root || root.val == p.val || root.val == q.val)
+            return root;
+        //按照上述规则，找到root的左子树的最近公共祖先。
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        //按照上述规则，找到root的右子树的最近公共祖先。
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        //一边找到了，一边没找到，根据上述规则，找到的就是最近公共祖先。
+        if (null == left)
+            return right;
+        if (null == right)
+            return left;
+        //如果在左右子树分别找到了p和q，则说明root是它们两个的最近公共祖先。
+        return root;
+    }
+
+    /**
      * 二叉树前序遍历，迭代法
      * 前序的规则就是根结点 ---> 左子树 ---> 右子树.（一定要记清楚定义）
-     *
      */
     //递归方法
     public static void preorderTraversal(TreeNode root, List<Integer> res) {
@@ -42,19 +61,20 @@ public class TreeSolution {
         }
         return res;
     }
+
     //该写法好理解，但是本质上没有利用栈来模拟递归过程
     public static List<Integer> preorderTraversal(TreeNode root) {
         List result = new ArrayList<>();
-        if(root == null)
+        if (root == null)
             return result;
         Stack stack = new Stack();
         stack.push(root);
-        while(!stack.isEmpty()){
+        while (!stack.isEmpty()) {
             TreeNode tmp = (TreeNode) stack.pop();
             result.add(tmp.val);
-            if(tmp.right != null)
+            if (tmp.right != null)
                 stack.push(tmp.right);
-            if(tmp.left != null)
+            if (tmp.left != null)
                 stack.push(tmp.left);
         }
         return result;
@@ -72,6 +92,7 @@ public class TreeSolution {
         postorder(root.right, res);
         res.add(root.val);
     }
+
     //迭代方法
     public static List<Integer> postorderTraversal2(TreeNode root) {
         List<Integer> res = new ArrayList<Integer>();
@@ -100,6 +121,7 @@ public class TreeSolution {
         }
         return res;
     }
+
     //94、二叉树的中序遍历，递归方法
     public static void inorderTraversal(TreeNode root, List res) {
         if (root == null) {
@@ -147,12 +169,13 @@ public class TreeSolution {
      * 剑指 Offer 28. 对称的二叉树
      * 递归
      */
-    public  boolean isSymmetric(TreeNode root) {
+    public boolean isSymmetric(TreeNode root) {
         return root == null ? true : recur(root.left, root.right);
     }
-    boolean  recur(TreeNode L, TreeNode R) {
-        if(L == null && R == null) return true;
-        if(L == null || R == null || L.val != R.val) return false;
+
+    boolean recur(TreeNode L, TreeNode R) {
+        if (L == null && R == null) return true;
+        if (L == null || R == null || L.val != R.val) return false;
         //按层分开，每次保证对比的都是镜像位置，可以以最左和最右进行推演思考
         return recur(L.left, R.right) && recur(L.right, R.left);
     }
@@ -163,22 +186,24 @@ public class TreeSolution {
      * 翻转二叉树
      */
     public static TreeNode mirrorTree(TreeNode root) {
-        if(root == null)
+        if (root == null)
             return null;
         TreeNode tmp = root.left;
         root.left = mirrorTree(root.right);
         root.right = mirrorTree(tmp);
         return root;
     }
+
     /**
      * 剑指 Offer 55 - I. 二叉树的深度
      * 递归方法：树的深度等于左右子树深度的最大值+1
      */
     public static int maxDepth(TreeNode root) {
-        if(root == null)
+        if (root == null)
             return 0;
         return Math.max(maxDepth(root.right), maxDepth(root.left)) + 1;
     }
+
     /**
      * 94. 二叉树的中序遍历
      * 前序遍历，后续遍历只需要调换位置即可
@@ -205,25 +230,26 @@ public class TreeSolution {
      * 广度优先搜索同理
      */
     public int[] levelOrder(TreeNode root) {
-        if(root == null) return new int[0];
+        if (root == null) return new int[0];
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
         ArrayList<Integer> list = new ArrayList();
-        while(!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             TreeNode node = queue.poll();
             list.add(node.val);
-            if(node.left != null)
+            if (node.left != null)
                 queue.add(node.left);
-            if(node.right != null)
+            if (node.right != null)
                 queue.add(node.right);
         }
         int length = list.size();
         int[] res = new int[length];
-        for(int i = 0; i < length; i++){
+        for (int i = 0; i < length; i++) {
             res[i] = list.get(i);
         }
         return res;
     }
+
     /**
      * 剑指 Offer 32 - II. 从上到下打印二叉树 II
      * 按层次打印
@@ -232,15 +258,15 @@ public class TreeSolution {
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(root);
         List<List<Integer>> list = new ArrayList();
-        while(!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             List<Integer> temp = new ArrayList<>();
             //循环次数刚好是进入循环时队列的size值,即该层的节点数
-            for(int i = 0; i < queue.size(); i++){
+            for (int i = 0; i < queue.size(); i++) {
                 TreeNode node = queue.poll();
                 temp.add(node.val);
-                if(node.left != null)
+                if (node.left != null)
                     queue.add(node.left);
-                if(node.right != null)
+                if (node.right != null)
                     queue.add(node.right);
             }
             list.add(temp);
@@ -248,17 +274,18 @@ public class TreeSolution {
         }
         return list;
     }
+
     /**
      * 剑指 Offer 07. 重建二叉树
      * 输入某二叉树的前序遍历和中序遍历的结果，请重建该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。
      * 前序遍历 preorder = [3,9,20,15,7]
      * 中序遍历 inorder = [9,3,15,20,7]
-     *     3
-     *    / \
-     *   9  20
-     *     /  \
-     *    15   7
-     *    递归法和迭代法都比较难，中等难度
+     * 3
+     * / \
+     * 9  20
+     * /  \
+     * 15   7
+     * 递归法和迭代法都比较难，中等难度
      */
     public TreeNode myBuildTree(int[] preorder, int[] inorder, int preorder_left, int preorder_right, int inorder_left, int inorder_right) {
         if (preorder_left > preorder_right) {

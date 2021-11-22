@@ -2,13 +2,29 @@ import java.util.*;
 
 public class ArraySolution {
 
+    /**
+     * 二分查找
+     */
+    public static int search(int[] nums, int target) {
+        int low = 0, high = nums.length - 1;
+        while (low <= high) {
+            int mid = (high - low) / 2 + low;
+            int num = nums[mid];
+            if (num == target) {
+                return mid;
+            } else if (num > target) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return -1;
+    }
 
     /**
      * 面试题：一个先递增再递减的数组，求出数组中不重复元素的个数
      * 要求: o(n)
      */
-
-
     public static int repeat_num(int[] arr) {
         int  max_index = 0, i = 0, j = 0, rep_num = 0, len = arr.length;
         //先找到最大值
